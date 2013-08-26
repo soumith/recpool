@@ -22,8 +22,8 @@ end
 function FixedShrink:updateOutput(input)
    self.output:resizeAs(input)
    self.output:copy(input)
-   --self.output[torch.lt(input, 0)] = 0
-   self.output:maxZero()
+   self.output[torch.lt(input, 0)] = 0
+   -- self.output:maxZero()
    return self.output
 end
 
@@ -31,8 +31,8 @@ function FixedShrink:updateGradInput(input, gradOutput)
    self.gradInput:resizeAs(gradOutput)
    self.gradInput:copy(gradOutput)
    -- this assumes that updateOutput was called before updateGradInput
-   --self.gradInput[torch.lt(input, 0)] = 0 -- The second index always holds 0, so if it is selected by max, the output was clipped
-   self.gradInput:maxZero2(input)
+   self.gradInput[torch.lt(input, 0)] = 0 -- The second index always holds 0, so if it is selected by max, the output was clipped
+   -- self.gradInput:maxZero2(input)
    
    return self.gradInput
 end
