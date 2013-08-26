@@ -1,6 +1,6 @@
 require 'torch'
 require 'nn'
-require 'kex'
+-- require 'kex'
 
 IGNORE_CLASSIFICATION = false
 UNSUPERVISED_CLASSIFICATION = false -- rather than using KL(p:q), where p is the observed distribution (one 1 and the rest 0's), use KL(q:q), which is equivalent to the negative entropy 
@@ -572,7 +572,7 @@ function build_heterogeneous_L1_criterion(layer_size, first_L1_lambda, second_L1
    split_sparsifying_concat:add(first_split)
    split_sparsifying_concat:add(second_split)
    
-   crit:add(nn.Transpose()) -- ensures that the first dimension should be split, even if the network is processing a batch, for which the input iterations are usually along the first dimension
+   crit:add(nn.Transpose_rp()) -- ensures that the first dimension should be split, even if the network is processing a batch, for which the input iterations are usually along the first dimension
    crit:add(split_sparsifying_concat)
    crit:add(nn.Sum(1)) -- add up the losses from the two splits; returns a scalar, since its summing up a one-dimensional tensor
    crit:add(nn.SafeIdentity()) -- make sure that the nn.Sum() receives a tensor as a gradOutput, rather than a nil, even though its gradInput will be ignored by the L1CriterionModules

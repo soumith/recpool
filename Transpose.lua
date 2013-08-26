@@ -1,12 +1,12 @@
-local Transpose, parent = torch.class('nn.Transpose', 'nn.Module')
+local Transpose_rp, parent = torch.class('nn.Transpose_rp', 'nn.Module')
 
--- Transpose the input tensor if it has more than one dimension
+-- Transpose_rp the input tensor if it has more than one dimension
 
-function Transpose:__init()
+function Transpose_rp:__init()
    parent.__init(self)
 end
 
-function Transpose:updateOutput(input)
+function Transpose_rp:updateOutput(input)
    if input:dim() > 1 then
       self.output = input:transpose(1,input:dim())
    else
@@ -16,7 +16,7 @@ function Transpose:updateOutput(input)
 end
 
 
-function Transpose:updateGradInput(input, gradOutput)
+function Transpose_rp:updateGradInput(input, gradOutput)
    if input:dim() > 1 then
       self.gradInput = gradOutput:transpose(1,input:dim())
    else

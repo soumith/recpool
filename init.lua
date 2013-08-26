@@ -1,4 +1,4 @@
-require 'kex'
+require 'nn'
 -- modifying kex
 --torch.include('nn', 'ScaledGradDiag.lua')
 dofile('ScaledGradDiag.lua')
